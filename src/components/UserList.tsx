@@ -1,10 +1,10 @@
 "use client";
 
 import React from 'react';
-import { useUsers } from '../hooks/useUser';
+import { useFetchUsers } from '@/hooks/useUser';
 
 const UserList: React.FC = () => {
-  const { users, isLoading, isError } = useUsers();
+  const { users, isLoading, isError } = useFetchUsers();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Oops! Something went wrong while fetching the data.</div>;

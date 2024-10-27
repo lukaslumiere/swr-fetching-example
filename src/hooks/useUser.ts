@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { fetchUserData } from '@/services/fetcher';
 
 interface User {
   id: number;
@@ -7,20 +8,12 @@ interface User {
   email: string;
 }
 
-const fetcher = (url: string) => fetch(url).then(res => {
-  if (!res.ok) {
-    throw new Error('Failed to fetch data.');
-  }
-  return res.json();
-});
-
-export const useUsers = () => {
-  const { data, error } = useSWR<User[]>('https://jsonplaceholder.typicode.com/users', fetcher);
-  const isLoading = !data && !error;
+export const useFetchUsers = () => {
+  const { data, error } = useSWR<User[]>('https://jsonplaceholder.typicode.com/users', fetchUserData);
 
   return {
     users: data,
-    isLoading,
-    isError: error,
+    isLoading: !data && !error,
+    isError: !!error,
   };
 };
